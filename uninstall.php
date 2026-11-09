@@ -1,0 +1,67 @@
+<?php
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
+
+if ( ! defined( 'DAYMARK_SUBSCRIPTIONS_DELETE_DATA' ) || ! DAYMARK_SUBSCRIPTIONS_DELETE_DATA ) {
+	exit;
+}
+
+global $wpdb;
+wp_clear_scheduled_hook( 'daymark_subscriptions_check_renewals' );
+wp_clear_scheduled_hook( 'daymark_subscriptions_reconcile' );
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_subscriptions" );
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_plans" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_invoices" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_stripe_events" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_rate_limits" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_audit_logs" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_operations" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_job_runs" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}daymark_email_logs" );
+foreach ( array( 'daymark_product_updates', 'daymark_profile_visibility', 'daymark_profile_picture_url', 'daymark_phone', 'daymark_email_change_hash', 'daymark_email_change_target', 'daymark_email_change_expires', 'daymark_privacy_deletion_requested_at', 'daymark_privacy_deletion_approved_at', 'daymark_checkout_created_at', 'daymark_account_state' ) as $meta_key ) $wpdb->delete( $wpdb->usermeta, array( 'meta_key' => $meta_key ), array( '%s' ) );
+delete_option( 'daymark_subscriptions_db_version' );
+delete_option( 'daymark_subscriptions_db_error' );
+delete_option( 'daymark_subscriptions_brand_color' );
+delete_option( 'daymark_subscriptions_content_width' );
+delete_option( 'daymark_subscriptions_design_tokens' );
+delete_option( 'daymark_subscriptions_logo_id' );
+delete_option( 'daymark_subscriptions_currency' );
+delete_option( 'daymark_subscriptions_business_name' );
+delete_option( 'daymark_subscriptions_support_email' );
+delete_option( 'daymark_payment_provider' );
+delete_option( 'daymark_subscriptions_environment' );
+delete_option( 'daymark_stripe_mode' );
+delete_option( 'daymark_stripe_price_map' );
+delete_option( 'daymark_stripe_price_history' );
+delete_option( 'daymark_stripe_intro_coupon_map' );
+delete_option( 'daymark_stripe_automatic_tax' );
+delete_option( 'daymark_subscriptions_plan_change_timing' );
+delete_option( 'daymark_subscriptions_payment_grace_days' );
+delete_option( 'daymark_subscriptions_default_approval_mode' );
+delete_option( 'daymark_subscriptions_cancellation_mode' );
+delete_option( 'daymark_subscriptions_pause_days' );
+delete_option( 'daymark_subscriptions_renewal_reminder_days' );
+delete_option( 'daymark_subscriptions_offer_reminder_days' );
+delete_option( 'daymark_subscriptions_retry_max_attempts' );
+delete_option( 'daymark_subscriptions_retry_backoff_minutes' );
+delete_option( 'daymark_subscriptions_account_deletion_retention_days' );
+delete_option( 'daymark_subscriptions_abandoned_retention_days' );
+delete_option( 'daymark_subscriptions_pending_activation_retention_days' );
+delete_option( 'daymark_subscriptions_notification_admin_email' );
+delete_option( 'daymark_subscriptions_notification_from_name' );
+delete_option( 'daymark_subscriptions_notification_from_email' );
+delete_option( 'daymark_subscriptions_notification_reply_to' );
+delete_option( 'daymark_subscriptions_notification_events' );
+delete_option( 'daymark_subscriptions_notification_templates' );
+delete_option( 'daymark_subscriptions_admin_notifications_enabled' );
+delete_option( 'daymark_default_pages_ready' );
+delete_option( 'daymark_stripe_test_secret_key' );
+delete_option( 'daymark_stripe_test_webhook_secret' );
+delete_option( 'daymark_stripe_live_secret_key' );
+delete_option( 'daymark_stripe_live_webhook_secret' );
+delete_option( 'daymark_stripe_secret_key' );
+delete_option( 'daymark_stripe_webhook_secret' );
+delete_option( 'daymark_page_access_rules' );
+delete_option( 'daymark_menu_access_rules' );
+delete_option( 'daymark_feature_definitions' );
+delete_option( 'daymark_plan_feature_values' );
+if ( function_exists( 'wp_roles' ) ) foreach ( wp_roles()->roles as $role_name => $role_data ) if ( $role = get_role( $role_name ) ) foreach ( array( 'manage_daymark_subscriptions', 'manage_daymark_billing', 'review_daymark_subscriptions', 'view_daymark_reports' ) as $capability ) $role->remove_cap( $capability );

@@ -1,0 +1,17 @@
+.daymark-access-revoked { display: grid; min-height: min(620px, 72vh); place-items: center; padding: 48px 20px; background: var(--daymark-front-soft, #f7faf9); color: var(--daymark-front-ink, #17212b); font-family: var(--daymark-front-font, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif); }
+.daymark-access-revoked__card { width: min(520px, 100%); padding: 44px 42px; border: 1px solid var(--daymark-front-border, #dfe5e8); border-radius: var(--daymark-front-radius, 8px); background: var(--daymark-front-surface, #fff); box-shadow: 0 18px 45px rgba(23,33,43,.08); text-align: center; }
+.daymark-access-revoked__mark { display: grid; width: 52px; height: 52px; margin: 0 auto 22px; place-items: center; border: 5px solid var(--daymark-revoked-accent); border-left-color: transparent; border-radius: 50%; color: var(--daymark-revoked-accent); font-size: 19px; font-weight: 700; transform: rotate(-28deg); }
+.daymark-access-revoked__mark span { transform: rotate(28deg); }
+.daymark-access-revoked__eyebrow { margin: 0 0 8px; color: var(--daymark-revoked-accent); font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.daymark-access-revoked h1 { margin: 0 0 12px; color: var(--daymark-front-ink, #17212b); font-size: clamp(25px, 4vw, 32px); font-weight: 600; letter-spacing: -.025em; line-height: 1.15; }
+.daymark-access-revoked__message { max-width: 410px; margin: 0 auto; color: var(--daymark-front-muted, #66727e); font-size: 15px; line-height: 1.65; }
+.daymark-access-revoked__context { margin: 24px 0; padding: 12px 14px; border-left: 3px solid var(--daymark-revoked-accent); background: var(--daymark-front-soft, #f4f8f7); color: var(--daymark-front-ink, #34424d); font-size: 13px; line-height: 1.45; text-align: left; }
+.daymark-access-revoked__action { display: inline-flex; min-height: 42px; align-items: center; padding: 0 18px; border-radius: 4px; background: var(--daymark-revoked-accent); color: #fff; font-size: 13px; font-weight: 600; text-decoration: none; }
+.daymark-access-revoked__action:hover, .daymark-access-revoked__action:focus-visible { color: #fff; filter: brightness(.92); outline: 3px solid color-mix(in srgb, var(--daymark-revoked-accent) 24%, transparent); outline-offset: 2px; }
+@media (max-width: 600px) { .daymark-access-revoked { min-height: 60vh; padding: 28px 16px; } .daymark-access-revoked__card { padding: 32px 22px; } }
+.daymark-access-revoked { min-height: 76vh; background: #f8f6f4; }
+.daymark-access-revoked__card { padding: 54px 48px; border-radius: 22px; box-shadow: 0 22px 60px rgba(23, 33, 43, .09); }
+.daymark-access-revoked__mark { width: 62px; height: 62px; margin-bottom: 28px; }
+.daymark-access-revoked h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -.055em; }
+.daymark-access-revoked__message { font-size: 16px; }
+.daymark-access-revoked__action { min-height: 48px; padding-inline: 22px; border-radius: 10px; }
