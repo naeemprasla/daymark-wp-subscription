@@ -1,5 +1,11 @@
 # Current verification — 2026-11-09
 
+## 2026-11-09 — Subscription management asset path fix
+
+- PASS: Centralized asset mapping now separates WordPress script handles from physical JavaScript filenames.
+- PASS: Subscription management uses assets/subscription-management.js, restoring its API data loader.
+- PENDING: Browser cache may require a hard refresh; the plugin version is bumped to 1.31.6 for cache invalidation.
+
 ## 2026-11-09 — Centralized asset loading
 
 - PASS: Plugin CSS and JavaScript file enqueue calls are centralized in the main plugin bootstrap; shortcode/template/access classes no longer enqueue asset files directly.

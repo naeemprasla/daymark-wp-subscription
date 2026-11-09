@@ -161,6 +161,8 @@ $contains( $admin, 'daymark-code-editor', 'HTML email code editor is missing.' )
 $contains( $bootstrap, 'wp_enqueue_code_editor', 'Native HTML code editor enqueue is missing.' );
 $contains( $bootstrap, 'wp_enqueue_style', 'Main plugin asset style enqueue is missing.' );
 $contains( $bootstrap, 'wp_enqueue_script', 'Main plugin asset script enqueue is missing.' );
+$contains( $bootstrap, 'subscription-management.js', 'Subscription management script path is missing from the centralized loader.' );
+$contains( $bootstrap, 'subscription-management\' => \'daymark_subscription_management', 'Subscription management page fallback is missing from the centralized loader.' );
 $not_contains( $admin, 'wp_enqueue_style', 'Admin CSS enqueue must be centralized in the main plugin file.' );
 $not_contains( $admin, 'wp_enqueue_script', 'Admin JS enqueue must be centralized in the main plugin file.' );
 $not_contains( $shortcode, 'wp_enqueue_style', 'Frontend CSS enqueue must be centralized in the main plugin file.' );

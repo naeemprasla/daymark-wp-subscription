@@ -3,7 +3,7 @@
  * Plugin Name: Daymark Subscriptions
  * Plugin URI: https://example.com/daymark-subscriptions
  * Description: Subscription plans and user subscription lifecycle management for WordPress.
- * Version: 1.31.5
+ * Version: 1.31.6
  * Requires at least: 6.4
  * Requires PHP: 7.4
  * Author: Daymark
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DAYMARK_SUBSCRIPTIONS_VERSION', '1.31.5' );
+define( 'DAYMARK_SUBSCRIPTIONS_VERSION', '1.31.6' );
 define( 'DAYMARK_SUBSCRIPTIONS_FILE', __FILE__ );
 define( 'DAYMARK_SUBSCRIPTIONS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DAYMARK_SUBSCRIPTIONS_URL', plugin_dir_url( __FILE__ ) );
@@ -26,25 +26,25 @@ function daymark_subscriptions_has_shortcode( $tag ) {
 
 function daymark_subscriptions_enqueue_frontend_assets() {
 	$assets = array(
-		'daymark_subscribe'                => 'daymark-subscriptions-ui',
-		'daymark_profile'                  => '',
-		'daymark_checkout'                 => 'daymark-checkout-ui',
-		'daymark_subscription_management' => 'daymark-subscription-management',
-		'daymark_member_settings'          => 'daymark-member-settings',
-		'daymark_privacy_security'         => 'daymark-privacy-security',
-		'daymark_email_change_confirmation' => '',
-		'daymark_account_access'           => '',
+		'daymark_subscribe'                => array( 'handle' => 'daymark-subscriptions-ui', 'file' => 'subscriptions-ui.js' ),
+		'daymark_profile'                  => array(),
+		'daymark_checkout'                 => array( 'handle' => 'daymark-checkout-ui', 'file' => 'checkout-ui.js' ),
+		'daymark_subscription_management' => array( 'handle' => 'daymark-subscription-management', 'file' => 'subscription-management.js' ),
+		'daymark_member_settings'          => array( 'handle' => 'daymark-member-settings', 'file' => 'member-settings.js' ),
+		'daymark_privacy_security'         => array( 'handle' => 'daymark-privacy-security', 'file' => 'privacy-security.js' ),
+		'daymark_email_change_confirmation' => array(),
+		'daymark_account_access'           => array(),
 	);
 	$handles = array();
 	foreach ( $assets as $shortcode => $handle ) {
 		if ( daymark_subscriptions_has_shortcode( $shortcode ) ) $handles[ $shortcode ] = $handle;
 	}
+	foreach ( array( 'plans' => 'daymark_subscribe', 'checkout' => 'daymark_checkout', 'subscription-management' => 'daymark_subscription_management', 'settings' => 'daymark_member_settings', 'privacy-security' => 'daymark_privacy_security' ) as $slug => $shortcode ) {
+		if ( is_page( $slug ) ) $handles[ $shortcode ] = $assets[ $shortcode ];
+	}
 	$success = isset( $_GET['daymark_checkout'] ) && in_array( sanitize_key( wp_unslash( $_GET['daymark_checkout'] ) ), array( 'success', 'review' ), true );
 	if ( $handles || is_author() || $success ) wp_enqueue_style( 'daymark-subscriptions-frontend', DAYMARK_SUBSCRIPTIONS_URL . 'assets/frontend.css', array(), DAYMARK_SUBSCRIPTIONS_VERSION );
-	foreach ( $handles as $shortcode => $handle ) {
-		if ( 'daymark_member_settings' === $shortcode ) wp_enqueue_script( 'daymark-member-settings', DAYMARK_SUBSCRIPTIONS_URL . 'assets/member-settings.js', array(), DAYMARK_SUBSCRIPTIONS_VERSION, true );
-		elseif ( $handle ) wp_enqueue_script( $handle, DAYMARK_SUBSCRIPTIONS_URL . 'assets/' . $handle . '.js', array(), DAYMARK_SUBSCRIPTIONS_VERSION, true );
-	}
+	foreach ( $handles as $asset ) if ( ! empty( $asset['handle'] ) && ! empty( $asset['file'] ) ) wp_enqueue_script( $asset['handle'], DAYMARK_SUBSCRIPTIONS_URL . 'assets/' . $asset['file'], array(), DAYMARK_SUBSCRIPTIONS_VERSION, true );
 	if ( daymark_subscriptions_has_shortcode( 'daymark_member_settings' ) && function_exists( 'wp_enqueue_editor' ) ) wp_enqueue_editor();
 	if ( $success ) wp_enqueue_style( 'daymark-subscriptions-checkout-success', DAYMARK_SUBSCRIPTIONS_URL . 'assets/checkout-success.css', array(), DAYMARK_SUBSCRIPTIONS_VERSION );
 }

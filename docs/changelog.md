@@ -1,5 +1,13 @@
 # Changelog
 
+# 2026-11-09 — Subscription management asset path fix
+
+- Day: Monday
+- Date: 2026-11-09
+- Time: Asia/Karachi — frontend loading fix
+- Summary: Corrected centralized JavaScript filename mappings so subscription management, checkout, plans, privacy, and member settings scripts load from their actual asset files.
+- Files touched: daymark-subscriptions.php, tests/test-contracts.php, Readme.md, docs/changelog.md, docs/audit-report.md
+
 # 2026-11-09 — Centralized asset loading
 
 - Day: Monday
